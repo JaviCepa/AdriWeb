@@ -1,0 +1,8 @@
+<header class="site-header container">
+  <div class="brand"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></div>
+  <nav class="nav">
+    {% for item in site.nav %}
+      <a href="{{ item.url | relative_url }}" class="{% if page.url == item.url %}active{% endif %}">{{ item.title }}</a>
+    {% endfor %}
+  </nav>
+</header>

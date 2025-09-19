@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<article class="hero">
+  <h1 style="margin-bottom:6px">{{ page.title }}</h1>
+  {% if page.description %}<p style="margin-top:0;color:var(--muted)">{{ page.description }}</p>{% endif %}
+  <div class="chips">
+    {% if page.tags %}{% for t in page.tags %}<span class="chip">#{{ t }}</span>{% endfor %}{% endif %}
+    {% if page.year %}<span class="chip">{{ page.year }}</span>{% endif %}
+  </div>
+</article>
+
+{% if page.cover %}
+  <img src="{{ page.cover | relative_url }}" alt="Imagen de {{ page.title }}" style="width:100%;border-radius:12px;border:1px solid var(--border);margin-bottom:18px">
+{% endif %}
+
+<div class="card">
+  {{ content }}
+  <div class="actions">
+    {% if page.demo %}<a class="button" href="{{ page.demo }}" target="_blank" rel="noopener">Ver demo</a>{% endif %}
+    {% if page.repo %}<a class="button" href="{{ page.repo }}" target="_blank" rel="noopener">Ver código</a>{% endif %}
+  </div>
+</div>

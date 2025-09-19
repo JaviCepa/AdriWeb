@@ -1,0 +1,49 @@
+title: "Proyectos de Mi Colega"
+description: "Portfolio sencillo y rápido para enseñar proyectos."
+url: "" # Pon aquí tu dominio (ej. https://midominio.com) cuando lo tengas
+baseurl: ""
+
+theme: null
+markdown: kramdown
+permalink: pretty
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+collections:
+  projects:
+    output: true
+    permalink: /proyectos/:slug/
+
+defaults:
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: project
+      is_project: true
+
+sass:
+  style: compressed
+
+# Meta del autor para SEO
+author:
+  name: "Nombre Apellido"
+  url: "https://example.com"
+
+# Navegación principal
+nav:
+  - title: Inicio
+    url: /
+  - title: Proyectos
+    url: /
+  - title: Sobre mí
+    url: /sobre/
+
+# Etiquetas permitidas para filtros (opcional)
+project_tags:
+  - web
+  - móvil
+  - juego
+  - datos
+  - CLI

@@ -1,0 +1,50 @@
+---
+layout: default
+---
+<section class="hero">
+  <h1>Proyectos</h1>
+  <p>Un escaparate rápido y minimalista para enseñar trabajo sin dramas.</p>
+  <input id="q" class="search" type="search" placeholder="Buscar proyectos (teclas / para enfocar, Esc para limpiar)" aria-label="Buscar">
+  <div class="filterbar">
+    <a href="?tag=" class="tag all active">Todos</a>
+    {% for t in site.project_tags %}
+      <a href="?tag={{ t }}" class="tag">#{{ t }}</a>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="grid" class="grid">
+  {% assign items = site.projects | sort: 'date' | reverse %}
+  {% for project in items %}
+    {% include card.html project=project %}
+  {% endfor %}
+</section>
+
+<script>
+  // Búsqueda extremadamente simple en el DOM (sin librerías)
+  const q = document.getElementById('q');
+  const grid = document.getElementById('grid');
+  const cards = [...grid.querySelectorAll('.card')];
+  const tagLinks = [...document.querySelectorAll('.filterbar .tag')];
+
+  function applyFilter() {
+    const params = new URLSearchParams(location.search);
+    const tag = params.get('tag') || "";
+    tagLinks.forEach(a => a.classList.toggle('active', (a.getAttribute('href') === `?tag=${tag}`) || (a.classList.contains('all') && tag==="")));
+    cards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      const matchQ = text.includes(q.value.toLowerCase());
+      const matchTag = tag==="" || text.includes(`#${tag}`);
+      card.style.display = (matchQ && matchTag) ? "" : "none";
+    });
+  }
+  q.addEventListener('input', applyFilter);
+  window.addEventListener('popstate', applyFilter);
+  applyFilter();
+
+  // Atajos de teclado: "/" para enfocar, Esc para limpiar
+  window.addEventListener('keydown', (e)=>{
+    if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+    if (e.key === 'Escape') { q.value = ""; applyFilter(); }
+  });
+</script>
