@@ -15,6 +15,11 @@ layout: default
 {% endif %}
 
 <div class="card">
+  {% assign demo_url = page.demo %}
+  {% if demo_url and demo_url contains 'youtu' %}
+    {% capture yt_id %}{% if demo_url contains 'embed/' %}{{ demo_url | split: 'embed/' | last | split: '?' | first }}{% elsif demo_url contains 'watch?v=' %}{{ demo_url | split: 'watch?v=' | last | split: '&' | first }}{% else %}{{ demo_url | split: '/' | last | split: '?' | first }}{% endif %}{% endcapture %}
+    {% include youtube.html id=yt_id %}
+  {% endif %}
   {{ content }}
   <div class="actions">
     {% if page.demo %}<a class="button" href="{{ page.demo }}" target="_blank" rel="noopener">Ver demo</a>{% endif %}
